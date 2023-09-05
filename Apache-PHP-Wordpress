@@ -1,0 +1,25 @@
+#Create a new directory
+#Create a file inside this directory
+#Write all the below given instructions inside the DockerFile
+
+FROM php:7.4-apache
+RUN apt-get install
+# Install WordPress
+RUN apt-get update && apt-get install -y wordpress
+# Copy the WordPress files to the container
+COPY wordpress /var/www/html
+# Set document root
+WORKDIR /var/www/html
+# Expose port 80
+EXPOSE 80
+#Enter the Entrypoint
+ENTRYPOINT ["apache"]
+# Set the WordPress database connection details
+ARG DB_HOST=localhost
+ARG DB_NAME=wordpress
+ARG DB_USER=wordpress
+ARG DB_PASSWORD=wordpress
+# Create the WordPress database
+RUN mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
+# Start the Apache web server
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
