@@ -1,1 +1,16 @@
+#Install Terraform on Windows
+#Install Amazon CLI
+#Install VSCode
+#Install Terraform plugins on VScode
 
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "wordpress" {
+    name = "wordpress"
+    ami = "ami-06f621d90fa29f6d0"
+    instance_type = "t2.micro"
+    subnet_id = "subnet-03060fbbfb7bc368c"
+    vpc_security_group_ids = ["sg-0dc316623749199c5"]
+}
